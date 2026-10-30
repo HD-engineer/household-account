@@ -81,9 +81,11 @@
       <label><span>메모</span><input id="memo" maxlength="30" placeholder="어디에 썼나요?" /></label>
       <div><span class="label-text">누가 기록했나요?</span><div class="owner-toggle"><button type="button" class="active" data-owner="나">🦊 나</button><button type="button" data-owner="아내">☁️ 아내</button></div></div>
       <button class="submit-button" type="submit">기록하기</button>
+      <button class="delete-entry" id="deleteEntry" type="button">이 기록 삭제하기</button>
     </form>
   </section>
   <div class="toast" id="toast"></div>
+  <script src="firebase-sync.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

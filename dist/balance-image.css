@@ -21,3 +21,15 @@
   display: block;
   background: url("rich.png") center / contain no-repeat;
 }
+
+.transaction[data-tx-id] { cursor: pointer; }
+
+.delete-entry {
+  display: none;
+  padding: 12px;
+  color: #c9564e;
+  background: #fff;
+  border: 1px solid #f0cbc8;
+  border-radius: 14px;
+  font-weight: 700;
+}
