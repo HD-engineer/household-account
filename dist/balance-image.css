@@ -1,0 +1,23 @@
+.balance-card::before {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 92px;
+  height: 92px;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.35) url("jjoop.png") center / contain no-repeat;
+}
+
+.mini-sticker.fffox-sticker {
+  display: block;
+  flex: 0 0 auto;
+  background: url("fffox.png") center / contain no-repeat;
+}
+
+.comment-sticker.rich-sticker {
+  display: block;
+  background: url("rich.png") center / contain no-repeat;
+}

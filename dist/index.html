@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fffaf1" />
+  <meta name="description" content="우리 둘의 귀엽고 간편한 모바일 가계부" />
+  <title>여우와 유부의 가계부</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="balance-image.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="todayLabel"></p>
+        <h1>덕츄쀼 가계부<span>✦</span></h1>
+      </div>
+      <button class="avatar-pair" id="profileButton" aria-label="사용자 선택"><span class="avatar fox"></span><span class="avatar yubu"></span></button>
+    </header>
+
+    <main>
+      <section class="page active" data-page="home">
+        <div class="month-nav"><button id="prevMonth" aria-label="이전 달">‹</button><button id="monthPicker" class="month-title"></button><button id="nextMonth" aria-label="다음 달">›</button></div>
+        <article class="balance-card">
+          <div class="balance-copy"><p>이번 달 남은 돈</p><strong id="balanceValue">0원</strong><span id="balanceNote">차곡차곡 모으는 중이에요</span></div>
+          <div class="summary-row"><div><span>수입</span><b class="income" id="incomeValue">0원</b></div><i></i><div><span>지출</span><b class="expense" id="expenseValue">0원</b></div></div>
+        </article>
+
+        <div class="section-head"><h2>카테고리별 지출</h2><button data-go="stats">자세히 보기</button></div>
+        <article class="category-card" id="categorySummary"></article>
+
+        <div class="section-head"><h2>최근 내역</h2><button data-go="history">전체 보기</button></div>
+        <div class="transaction-list" id="recentList"></div>
+      </section>
+
+      <section class="page" data-page="history">
+        <div class="page-title"><div><p class="eyebrow">우리의 기록</p><h2>내역</h2></div><button class="soft-button" id="searchToggle">검색</button></div>
+        <div class="search-box hidden" id="searchBox"><input id="searchInput" placeholder="메모나 카테고리 검색" /></div>
+        <div class="filter-row"><button class="filter active" data-filter="all">전체</button><button class="filter" data-filter="expense">지출</button><button class="filter" data-filter="income">수입</button><button class="filter" data-filter="나">나</button><button class="filter" data-filter="아내">아내</button></div>
+        <div class="history-total" id="historyTotal"></div>
+        <div class="transaction-list full" id="historyList"></div>
+      </section>
+
+      <section class="page" data-page="stats">
+        <div class="page-title"><div><p class="eyebrow">한눈에 쏙</p><h2>통계</h2></div><span class="mini-sticker fffox-sticker"></span></div>
+        <article class="stat-card"><p>이번 달 소비</p><strong id="statExpense">0원</strong><div class="bar-chart" id="barChart"></div></article>
+        <div class="section-head"><h2>지출 비중</h2></div>
+        <article class="donut-card"><div class="donut" id="donut"><span id="donutText">0원</span></div><div class="legend" id="statLegend"></div></article>
+        <div class="section-head"><h2>우리의 소비 한마디</h2></div>
+        <article class="comment-card"><span class="comment-sticker rich-sticker"></span><p id="spendingComment"></p></article>
+      </section>
+
+      <section class="page" data-page="budget">
+        <div class="page-title"><div><p class="eyebrow">알뜰살뜰</p><h2>예산</h2></div><span class="mini-sticker yubu-sprite"></span></div>
+        <article class="budget-total"><p>이번 달 전체 예산</p><div><strong id="budgetRemain">0원</strong><button id="editBudget">수정</button></div><div class="progress"><i id="budgetBar"></i></div><small id="budgetCaption"></small></article>
+        <div class="section-head"><h2>카테고리 예산</h2></div>
+        <div id="budgetList" class="budget-list"></div>
+        <button class="outline-wide" id="exportButton">데이터 백업하기</button>
+        <label class="outline-wide file-label">백업 불러오기<input type="file" id="importInput" accept="application/json" /></label>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="주 메뉴">
+      <button class="active" data-nav="home"><span>⌂</span>홈</button>
+      <button data-nav="history"><span>≡</span>내역</button>
+      <button class="add-button" id="openForm" aria-label="내역 추가"><span>＋</span></button>
+      <button data-nav="stats"><span>◔</span>통계</button>
+      <button data-nav="budget"><span>♡</span>예산</button>
+    </nav>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <section class="bottom-sheet" id="entrySheet" aria-modal="true" role="dialog" aria-labelledby="formTitle">
+    <div class="sheet-handle"></div><div class="sheet-title"><div><p class="eyebrow">잊기 전에 쏙</p><h2 id="formTitle">내역 추가</h2></div><button class="close-sheet" aria-label="닫기">×</button></div>
+    <form id="entryForm">
+      <div class="type-toggle"><button type="button" class="active" data-type="expense">지출</button><button type="button" data-type="income">수입</button></div>
+      <label class="amount-field"><span>금액</span><div><input id="amount" type="text" inputmode="numeric" placeholder="0" required /><b>원</b></div></label>
+      <label><span>날짜</span><input id="date" type="date" required /></label>
+      <div><span class="label-text">카테고리</span><div class="category-picker" id="categoryPicker"></div></div>
+      <label><span>메모</span><input id="memo" maxlength="30" placeholder="어디에 썼나요?" /></label>
+      <div><span class="label-text">누가 기록했나요?</span><div class="owner-toggle"><button type="button" class="active" data-owner="나">🦊 나</button><button type="button" data-owner="아내">☁️ 아내</button></div></div>
+      <button class="submit-button" type="submit">기록하기</button>
+    </form>
+  </section>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
